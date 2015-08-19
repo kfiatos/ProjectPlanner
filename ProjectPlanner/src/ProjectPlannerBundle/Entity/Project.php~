@@ -1,0 +1,221 @@
+<?php
+
+namespace ProjectPlannerBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Project
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="ProjectPlannerBundle\Entity\ProjectRepository")
+ */
+class Project
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", length=255)
+     */
+    private $title;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text")
+     */
+    private $description;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="members_id", type="integer")
+     */
+    private $membersId;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="deadline", type="date")
+     */
+    private $deadline;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="comments_id", type="integer")
+     */
+    private $commentsId;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="bug_id", type="integer")
+     */
+    private $bugId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="status", type="string")
+     */
+    private $status;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     * @return Project
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string 
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return Project
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string 
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set membersId
+     *
+     * @param integer $membersId
+     * @return Project
+     */
+    public function setMembersId($membersId)
+    {
+        $this->membersId = $membersId;
+
+        return $this;
+    }
+
+    /**
+     * Get membersId
+     *
+     * @return integer 
+     */
+    public function getMembersId()
+    {
+        return $this->membersId;
+    }
+
+    /**
+     * Set deadline
+     *
+     * @param \DateTime $deadline
+     * @return Project
+     */
+    public function setDeadline($deadline)
+    {
+        $this->deadline = $deadline;
+
+        return $this;
+    }
+
+    /**
+     * Get deadline
+     *
+     * @return \DateTime 
+     */
+    public function getDeadline()
+    {
+        return $this->deadline;
+    }
+
+    /**
+     * Set commentsId
+     *
+     * @param integer $commentsId
+     * @return Project
+     */
+    public function setCommentsId($commentsId)
+    {
+        $this->commentsId = $commentsId;
+
+        return $this;
+    }
+
+    /**
+     * Get commentsId
+     *
+     * @return integer 
+     */
+    public function getCommentsId()
+    {
+        return $this->commentsId;
+    }
+
+    /**
+     * Set bugId
+     *
+     * @param integer $bugId
+     * @return Project
+     */
+    public function setBugId($bugId)
+    {
+        $this->bugId = $bugId;
+
+        return $this;
+    }
+
+    /**
+     * Get bugId
+     *
+     * @return integer 
+     */
+    public function getBugId()
+    {
+        return $this->bugId;
+    }
+}
