@@ -2,7 +2,7 @@ homepage:
     path: /
     defaults:
         _controller: FrameworkBundle:Template:template
-        template: CodersLabWorkshopBundle:Static:homepage.html.twig
+        template: ProjectPlannerBundle:Static:homepage.html.twig
 
 project_planner:
     resource: "@ProjectPlannerBundle/Controller/"
@@ -11,4 +11,5 @@ project_planner:
 
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
 

@@ -1,18 +1,18 @@
-{% extends 'base.html.twig' %}
+{% extends '@ProjectPlanner/layout.html.twig' %}
 
-{% block body -%}
+{% block main -%}
     <h1>Project list</h1>
 
-    <table class="records_list">
+    <table class="records_list table table-striped">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Title</th>
                 <th>Description</th>
-                <th>Membersid</th>
+                <th>Memebers</th>
                 <th>Deadline</th>
-                <th>Commentsid</th>
-                <th>Bugid</th>
+                <th>Comments</th>
+                <th>Issues</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -29,10 +29,10 @@
                 <td>
                 <ul>
                     <li>
-                        <a href="{{ path('project_show', { 'id': entity.id }) }}">show</a>
+                        <a href="{{ path('project_show', { 'id': entity.id }) }}">Szczegóły</a>
                     </li>
                     <li>
-                        <a href="{{ path('project_edit', { 'id': entity.id }) }}">edit</a>
+                        <a href="{{ path('project_edit', { 'id': entity.id }) }}">Edycja</a>
                     </li>
                 </ul>
                 </td>
@@ -44,7 +44,7 @@
         <ul>
         <li>
             <a href="{{ path('project_new') }}">
-                Create a new entry
+                Dodaj nowy Projekt
             </a>
         </li>
     </ul>

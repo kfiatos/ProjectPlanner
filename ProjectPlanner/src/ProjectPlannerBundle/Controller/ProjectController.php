@@ -31,6 +31,8 @@ class ProjectController extends Controller
 
         $entities = $em->getRepository('ProjectPlannerBundle:Project')->findAll();
 
+
+
         return array(
             'entities' => $entities,
         );
@@ -111,6 +113,7 @@ class ProjectController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('ProjectPlannerBundle:Project')->find($id);
+        $users = $em->getRepository('ProjectPlannerBundle:User')->findAll();
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Project entity.');
@@ -120,6 +123,8 @@ class ProjectController extends Controller
 
         return array(
             'entity'      => $entity,
+            'users'       => $users,
+            'assigned_users' => $entity->getUsers(),
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -243,5 +248,44 @@ class ProjectController extends Controller
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
+    }
+
+    /**
+     *
+     * @Route("/assign_user/{user_id}/{project_id}", name="project_assign_user")
+     * @Method("GET")
+     */
+    public function assignUserAction($user_id, $project_id){
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('ProjectPlannerBundle:User')->find($user_id);
+        $project = $em->getRepository('ProjectPlannerBundle:Project')->find($project_id);
+        $project->addUser($user);
+        $em->persist($project);
+        $em->flush();
+            $this->addFlash(
+                'success',
+                'Użytkownik został dodany do projektu!'
+            );
+        return $this->redirect($this->generateUrl('project_show', array('id' => $project_id)));
+    }
+
+    /**
+     *
+     * @Route("/delete_user/{user_id}/{project_id}", name="project_delete_user")
+     * @Method("GET")
+     */
+    public function deleteUserAction($user_id, $project_id){
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('ProjectPlannerBundle:User')->find($user_id);
+        $project = $em->getRepository('ProjectPlannerBundle:Project')->find($project_id);
+        $project->removeUser($user);
+        $em->persist($project);
+        $em->flush();
+        $this->addFlash(
+            'success',
+            'Użytkownik został usunięty z projektu!'
+        );
+
+        return $this->redirect($this->generateUrl('project_show', array('id' => $project_id)));
     }
 }

@@ -1,9 +1,8 @@
-{% extends '::base.html.twig' %}
+{% extends '@ProjectPlanner/layout.html.twig' %}
 
-{% block body -%}
-    <h1>Project</h1>
-
-    <table class="record_properties">
+{% block main -%}
+    <h1>Projekt</h1>
+    <table class="record_properties table table-striped">
         <tbody>
             <tr>
                 <th>Id</th>
@@ -35,6 +34,33 @@
             </tr>
         </tbody>
     </table>
+        {% if assigned_users is not empty %}
+        <h4>Użytkownicy w projekcie</h4>
+            {% for assigned_user in assigned_users %}
+                <ul>
+                    <li>{{ assigned_user.username }}
+                        <a href="{{ path('project_delete_user', {'user_id': assigned_user.id, 'project_id': entity.id }) }}">Usuń użytkownika z projektu</a>
+                    </li>
+                </ul>
+            {% endfor %}
+        {% else %}
+            <div class="alert alert-warning">
+                Żaden użytkownik nie pracuje nad tym projektem
+            </div>
+        {% endif %}
+
+    <h4>Lista użytkowników</h4>
+        {% for user in users %}
+            <ul>
+                {% if not entity.isUserAssigned(user) %}
+                    <li>
+                        {{ user.username }}
+                        <a href="{{ path('project_assign_user', {'user_id': user.id, 'project_id': entity.id }) }}">Dodaj do projektu</a>
+                    </li>
+                {% endif %}
+            </ul>
+        {% endfor %}
+
 
         <ul class="record_actions">
     <li>

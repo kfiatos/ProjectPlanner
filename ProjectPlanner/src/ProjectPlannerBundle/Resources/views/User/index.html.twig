@@ -1,47 +1,31 @@
-{% extends '::base.html.twig' %}
+{% extends '@ProjectPlanner/layout.html.twig' %}
 
-{% block body -%}
+{% block main -%}
     <h1>User list</h1>
 
-    <table class="records_list">
+    <table class="records_list table table-striped">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Actions</th>
+                <th>Nazwa użytkownika</th>
+                <th>Opis</th>
+                <th>E-mail</th>
+                <th>Działania</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody >
         {% for entity in entities %}
-            <tr>
-                <td><a href="{{ path('user_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('user_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('user_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-                </td>
-            </tr>
             <tr>
                 <td><a href="{{ path('user_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{{ entity.username }}</td>
                 <td>{{ entity.description }}</td>
-                <td>{{ entity. }}</td>
-                <td>{% if entity.deadline %}{{ entity.deadline|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{{ entity.commentsId }}</td>
-                <td>{{ entity.bugId }}</td>
+                <td>{{ entity.email }}</td>
+
                 <td>
                     <ul>
                         <li>
-                            <a href="{{ path('project_show', { 'id': entity.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('project_edit', { 'id': entity.id }) }}">edit</a>
+                            <a href="{{ path('user_show', { 'id': entity.id }) }}">Pokaż</a>
+                            <a href="{{ path('user_edit', { 'id': entity.id }) }}">Edytuj</a>
                         </li>
                     </ul>
                 </td>
@@ -52,8 +36,8 @@
 
         <ul>
         <li>
-            <a href="{{ path('user_new') }}">
-                Create a new entry
+            <a href="{{ path('fos_user_registration_register') }}">
+                Dodaj nowego użytkownika
             </a>
         </li>
     </ul>

@@ -35,12 +35,14 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    globals:
+      project_name: ProjectPlanner
 
 # Assetic Configuration
 assetic:
     debug:          "%kernel.debug%"
     use_controller: true
-    bundles:        [MopaBootstrapBundle]
+    bundles:        []
     #java: /usr/bin/java
     filters:
         cssrewrite: ~
@@ -84,10 +86,10 @@ fos_user:
     firewall_name: main
     user_class: ProjectPlannerBundle\Entity\User
 
-mopa_bootstrap:
-    form:
-        show_legend: false # default is true
-        show_child_legend: false # default is true
-        error_type: block # or inline which is default
-    menu:
-        template: MyBundles:Menu:template.html.twig
+#mopa_bootstrap:
+#    form:
+#        show_legend: false # default is true
+#        show_child_legend: false # default is true
+#        error_type: block # or inline which is default
+#    menu:
+#        template: MyBundles:Menu:template.html.twig

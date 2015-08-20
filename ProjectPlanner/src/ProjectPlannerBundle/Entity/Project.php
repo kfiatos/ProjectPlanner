@@ -4,14 +4,34 @@ namespace ProjectPlannerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+
 /**
- * Project
- *
- * @ORM\Table(name="projects")
+ * ProjectPlannerBundle\Entity\Project
  * @ORM\Entity(repositoryClass="ProjectPlannerBundle\Entity\ProjectRepository")
+ * @ORM\Table(name="projects")
  */
 class Project
 {
+
+    /**
+     * @ORM\ManyToMany(targetEntity="ProjectPlannerBundle\Entity\User")
+     */
+    private $users;
+
+    /**
+     * @ORM\OneToMany(targetEntity="ProjectPlannerBundle\Entity\Issue", mappedBy="projects")
+     */
+    private $issues;
+
+    public function __construct(){
+        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->issues = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+
+
+
+
     /**
      * @var integer
      *
@@ -74,10 +94,9 @@ class Project
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
-    public function getId()
-    {
+    public function getId(){
         return $this->id;
     }
 
@@ -87,8 +106,7 @@ class Project
      * @param string $title
      * @return Project
      */
-    public function setTitle($title)
-    {
+    public function setTitle($title){
         $this->title = $title;
 
         return $this;
@@ -97,10 +115,9 @@ class Project
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
-    public function getTitle()
-    {
+    public function getTitle(){
         return $this->title;
     }
 
@@ -110,8 +127,7 @@ class Project
      * @param string $description
      * @return Project
      */
-    public function setDescription($description)
-    {
+    public function setDescription($description){
         $this->description = $description;
 
         return $this;
@@ -120,10 +136,9 @@ class Project
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
-    public function getDescription()
-    {
+    public function getDescription(){
         return $this->description;
     }
 
@@ -133,8 +148,7 @@ class Project
      * @param integer $membersId
      * @return Project
      */
-    public function setMembersId($membersId)
-    {
+    public function setMembersId($membersId){
         $this->membersId = $membersId;
 
         return $this;
@@ -143,10 +157,9 @@ class Project
     /**
      * Get membersId
      *
-     * @return integer 
+     * @return integer
      */
-    public function getMembersId()
-    {
+    public function getMembersId(){
         return $this->membersId;
     }
 
@@ -156,8 +169,7 @@ class Project
      * @param \DateTime $deadline
      * @return Project
      */
-    public function setDeadline($deadline)
-    {
+    public function setDeadline($deadline){
         $this->deadline = $deadline;
 
         return $this;
@@ -166,10 +178,9 @@ class Project
     /**
      * Get deadline
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
-    public function getDeadline()
-    {
+    public function getDeadline(){
         return $this->deadline;
     }
 
@@ -179,8 +190,7 @@ class Project
      * @param integer $commentsId
      * @return Project
      */
-    public function setCommentsId($commentsId)
-    {
+    public function setCommentsId($commentsId){
         $this->commentsId = $commentsId;
 
         return $this;
@@ -189,10 +199,9 @@ class Project
     /**
      * Get commentsId
      *
-     * @return integer 
+     * @return integer
      */
-    public function getCommentsId()
-    {
+    public function getCommentsId(){
         return $this->commentsId;
     }
 
@@ -202,8 +211,7 @@ class Project
      * @param integer $bugId
      * @return Project
      */
-    public function setBugId($bugId)
-    {
+    public function setBugId($bugId){
         $this->bugId = $bugId;
 
         return $this;
@@ -212,10 +220,9 @@ class Project
     /**
      * Get bugId
      *
-     * @return integer 
+     * @return integer
      */
-    public function getBugId()
-    {
+    public function getBugId(){
         return $this->bugId;
     }
 
@@ -225,8 +232,7 @@ class Project
      * @param string $status
      * @return Project
      */
-    public function setStatus($status)
-    {
+    public function setStatus($status){
         $this->status = $status;
 
         return $this;
@@ -235,10 +241,38 @@ class Project
     /**
      * Get status
      *
-     * @return string 
+     * @return string
      */
-    public function getStatus()
-    {
+    public function getStatus(){
         return $this->status;
     }
+
+    public function addUser(\ProjectPlannerBundle\Entity\User $user){
+        $this->users[] = $user;
+        return $this;
+    }
+
+    public function getUsers(){
+        return $this->users;
+    }
+
+    public function removeUser(\ProjectPlannerBundle\Entity\User $user){
+        $this->users->removeElement($user);
+
+    }
+
+    public function isUserAssigned(User $user){
+
+        foreach ($this->users as $searchedUser) {
+            if ($user->getId() == $searchedUser->getId()) {
+                return true;
+            }
+        }
+        return false;
+    }
+//    public function countAssignedUsers($id){
+//
+//    }
 }
+
+?>

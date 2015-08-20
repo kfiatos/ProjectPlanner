@@ -1,13 +1,13 @@
-{% extends '@ProjectPlanner/layout.html.twig' %}
+{% extends '::base.html.twig' %}
 
-{% block main -%}
-    <h1>Project creation</h1>
+{% block body -%}
+    <h1>Issue creation</h1>
 
     {{ form(form) }}
 
         <ul class="record_actions">
     <li>
-        <a href="{{ path('project') }}">
+        <a href="{{ path('issue') }}">
             Back to the list
         </a>
     </li>

@@ -3,33 +3,51 @@ namespace ProjectPlannerBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use ProjectPlannerBundle\ProjectPlannerBundle;
 
 
 /**
+ * ProjectPlannerBundle\Entity\User
  * @ORM\Entity
  * @ORM\Table(name="fos_users")
  */
 class User extends BaseUser
 {
     /**
+     * @ORM\ManyToMany(targetEntity="ProjectPlannerBundle\Entity\Project", inversedBy="fos_users")
+     * @ORM\JoinTable(name="users_projects")
+     */
+    private $projects;
+
+    public function __construct(){
+        parent::__construct();
+        $this->projects = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    public function addProject(\ProjectPlannerBundle\Entity\Project $project){
+        $this->projects[] = $project;
+        return $this;
+    }
+
+    public function removeProject(\ProjectPlannerBundle\Entity\Project $project){
+        $this->users->removeElement($project);
+
+    }
+
+    /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+
      */
     protected $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $description;
 
 
-
-    public function __construct()
-    {
-        parent::__construct();
-        // your own logic
-    }
 
     /**
      * @return mixed
