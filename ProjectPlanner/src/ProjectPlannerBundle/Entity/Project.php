@@ -28,10 +28,6 @@ class Project
         $this->issues = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-
-
-
-
     /**
      * @var integer
      *
@@ -270,9 +266,20 @@ class Project
         }
         return false;
     }
-//    public function countAssignedUsers($id){
-//
-//    }
+
+    public function getIssues(){
+        return $this->issues;
+    }
+
+    public function addIssue(Issue $issue){
+        $this->issues[] = $issue;
+        return $this;
+    }
+
+    public function removeIssue(Issue $issue){
+        $this->issues->removeElement($issue);
+
+    }
 }
 
 ?>

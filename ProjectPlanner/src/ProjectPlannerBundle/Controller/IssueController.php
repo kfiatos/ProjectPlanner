@@ -29,10 +29,10 @@ class IssueController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('ProjectPlannerBundle:Issue')->findAll();
+        $issues = $em->getRepository('ProjectPlannerBundle:Issue')->findAll();
 
         return array(
-            'entities' => $entities,
+            'issues' => $issues,
         );
     }
     /**
@@ -44,12 +44,16 @@ class IssueController extends Controller
      */
     public function createAction(Request $request)
     {
+        // pobierz projekt po id z ULRa
+        $project_id = $request->request->get('');
+        $em = $this->getDoctrine()->getManager();
+        $project = $em->getRepository('ProjectPlannerBundle:Project')->find($project_id);
         $entity = new Issue();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            $entity->setProject($project);
             $em->persist($entity);
             $em->flush();
 
@@ -84,17 +88,23 @@ class IssueController extends Controller
     /**
      * Displays a form to create a new Issue entity.
      *
-     * @Route("/new", name="issue_new")
+     * @Route("/new/{project_id}", name="issue_new")
      * @Method("GET")
      * @Template()
      */
-    public function newAction()
+    public function newAction(Request $request, $project_id)
     {
         $entity = new Issue();
         $form   = $this->createCreateForm($entity);
 
+        $em = $this->getDoctrine()->getManager();
+        $project = $em->getRepository('ProjectPlannerBundle:Project')->find($project_id);
+
+        $form->get('project')->setData($project);
+
         return array(
             'entity' => $entity,
+            'project_id' => $project_id,
             'form'   => $form->createView(),
         );
     }
@@ -245,12 +255,6 @@ class IssueController extends Controller
         ;
     }
 
-    public function setProject(){
 
-    }
-
-    public function getProject(){
-
-    }
 }
 

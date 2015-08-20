@@ -19,8 +19,8 @@
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('project_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.title }}</td>
+                <td>{{ entity.id }}</a></td>
+                <td><a href="{{ path('project_show', { 'id': entity.id }) }}" title="Szczegóły">{{ entity.title }}</td>
                 <td>{{ entity.description }}</td>
                 <td>{{ entity.membersId }}</td>
                 <td>{% if entity.deadline %}{{ entity.deadline|date('Y-m-d H:i:s') }}{% endif %}</td>
@@ -28,9 +28,6 @@
                 <td>{{ entity.bugId }}</td>
                 <td>
                 <ul>
-                    <li>
-                        <a href="{{ path('project_show', { 'id': entity.id }) }}">Szczegóły</a>
-                    </li>
                     <li>
                         <a href="{{ path('project_edit', { 'id': entity.id }) }}">Edycja</a>
                     </li>

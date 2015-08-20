@@ -20,7 +20,10 @@ class IssueType extends AbstractType
             ->add('started')
             ->add('resolvedAt')
             ->add('status')
-        ;
+            ->add('project', 'entity', array(
+                'class' => 'ProjectPlannerBundle:Project',
+                'choice_label' => 'title',
+            ));
     }
     
     /**

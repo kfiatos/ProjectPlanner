@@ -29,8 +29,11 @@
                 <td>{{ entity.commentsId }}</td>
             </tr>
             <tr>
-                <th>Bugid</th>
-                <td>{{ entity.bugId }}</td>
+                <th>Issues</th>
+                <td>
+                    A lot of issues <a href="{{ path('issue_new', { 'project_id': entity.id }) }}">Dodaj issue</a>
+
+                </td>
             </tr>
         </tbody>
     </table>
@@ -38,8 +41,8 @@
         <h4>Użytkownicy w projekcie</h4>
             {% for assigned_user in assigned_users %}
                 <ul>
-                    <li>{{ assigned_user.username }}
-                        <a href="{{ path('project_delete_user', {'user_id': assigned_user.id, 'project_id': entity.id }) }}">Usuń użytkownika z projektu</a>
+                    <li class="h4">{{ assigned_user.username }}
+                        <a class ="h6" href="{{ path('project_delete_user', {'user_id': assigned_user.id, 'project_id': entity.id }) }}">Usuń użytkownika z projektu</a>
                     </li>
                 </ul>
             {% endfor %}

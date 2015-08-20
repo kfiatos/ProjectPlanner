@@ -75,10 +75,9 @@ class Issue
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
-    public function getId()
-    {
+    public function getId(){
         return $this->id;
     }
 
@@ -88,8 +87,7 @@ class Issue
      * @param string $name
      * @return Issue
      */
-    public function setName($name)
-    {
+    public function setName($name){
         $this->name = $name;
 
         return $this;
@@ -98,10 +96,9 @@ class Issue
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
-    public function getIssueName()
-    {
+    public function getName(){
         return $this->issueName;
     }
 
@@ -111,8 +108,7 @@ class Issue
      * @param string $description
      * @return Issue
      */
-    public function setDescription($description)
-    {
+    public function setDescription($description){
         $this->description = $description;
 
         return $this;
@@ -121,10 +117,9 @@ class Issue
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
-    public function getDescription()
-    {
+    public function getDescription(){
         return $this->description;
     }
 
@@ -134,8 +129,7 @@ class Issue
      * @param \DateTime $started
      * @return Issue
      */
-    public function setStarted($started)
-    {
+    public function setStarted($started){
         $this->started = $started;
 
         return $this;
@@ -144,10 +138,9 @@ class Issue
     /**
      * Get started
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
-    public function getStarted()
-    {
+    public function getStarted(){
         return $this->started;
     }
 
@@ -157,8 +150,7 @@ class Issue
      * @param \DateTime $resolvedAt
      * @return Issue
      */
-    public function setResolvedAt($resolvedAt)
-    {
+    public function setResolvedAt($resolvedAt){
         $this->resolvedAt = $resolvedAt;
 
         return $this;
@@ -167,10 +159,9 @@ class Issue
     /**
      * Get resolvedAt
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
-    public function getResolvedAt()
-    {
+    public function getResolvedAt(){
         return $this->resolvedAt;
     }
 
@@ -180,8 +171,7 @@ class Issue
      * @param string $status
      * @return Issue
      */
-    public function setStatus($status)
-    {
+    public function setStatus($status){
         $this->status = $status;
 
         return $this;
@@ -190,10 +180,26 @@ class Issue
     /**
      * Get status
      *
-     * @return string 
+     * @return string
      */
-    public function getStatus()
-    {
+    public function getStatus(){
         return $this->status;
     }
+
+    /**
+     * Set project
+     *
+     * @return string
+     */
+    public function setProject($project){
+        $this->project = $project;
+
+        return $this;
+    }
+
+    public function getProject(){
+        return $this->project;
+    }
+
+
 }
