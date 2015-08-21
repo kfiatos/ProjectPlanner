@@ -1,6 +1,6 @@
 {% extends '::base.html.twig' %}
 
-{% block body -%}
+{% block main -%}
     <h1>Issue</h1>
 
     <table class="record_properties">
@@ -34,8 +34,8 @@
 
         <ul class="record_actions">
     <li>
-        <a href="{{ path('issue') }}">
-            Back to the list
+        <a href="{{ path('project_show', {'id': entity.project.getId() }) }}">
+            Powrót do projektu
         </a>
     </li>
     <li>

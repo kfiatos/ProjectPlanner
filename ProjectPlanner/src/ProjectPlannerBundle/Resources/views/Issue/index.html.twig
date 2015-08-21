@@ -1,9 +1,9 @@
 {% extends '::base.html.twig' %}
 
-{% block body -%}
+{% block main -%}
     <h1>Issue list</h1>
 
-    <table class="records_list">
+    <table class="records_list table-striped">
         <thead>
             <tr>
                 <th>Id</th>
@@ -18,11 +18,11 @@
         <tbody>
         {% for issue in issues %}
             <tr>
-                <td><a href="{{ path('issue_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td><a href="{{ path('issue_show', { 'id': issue.id }) }}">{{ issue.id }}</a></td>
                 <td>{{ issue.name }}</td>
                 <td>{{ issue.description }}</td>
-                <td>{% if issue.started %}{{ issue.started|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if issue.resolvedAt %}{{ issue.resolvedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if issue.started %}{{ issue.started|date('Y-m-d ') }}{% endif %}</td>
+                <td>{% if issue.resolvedAt %}{{ issue.resolvedAt|date('Y-m-d ') }}{% endif %}</td>
                 <td>{{ issue.status }}</td>
                 <td>
                 <ul>
@@ -41,7 +41,7 @@
 
         <ul>
         <li>
-            <a href="{{ path('issue_new') }}">
+            <a href="">
                 Create a new entry
             </a>
         </li>

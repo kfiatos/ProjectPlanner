@@ -3,6 +3,7 @@
 namespace ProjectPlannerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+//use DateTime
 
 
 /**
@@ -19,7 +20,7 @@ class Project
     private $users;
 
     /**
-     * @ORM\OneToMany(targetEntity="ProjectPlannerBundle\Entity\Issue", mappedBy="projects")
+     * @ORM\OneToMany(targetEntity="ProjectPlannerBundle\Entity\Issue", mappedBy="project")
      */
     private $issues;
 
@@ -280,6 +281,14 @@ class Project
         $this->issues->removeElement($issue);
 
     }
+    public function countAssignedUsers(){
+        return count($this->getUsers());
+    }
+    public function daysToDeadline(){
+        $diff = date_diff(new \DateTime(), $this->getDeadline());
+        return $diff->days;
+    }
+
 }
 
 ?>

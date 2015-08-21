@@ -23,7 +23,8 @@ class IssueType extends AbstractType
             ->add('project', 'entity', array(
                 'class' => 'ProjectPlannerBundle:Project',
                 'choice_label' => 'title',
-            ));
+            ))
+        ;
     }
     
     /**

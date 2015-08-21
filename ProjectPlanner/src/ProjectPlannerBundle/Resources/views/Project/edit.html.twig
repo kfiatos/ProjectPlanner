@@ -1,14 +1,14 @@
 {% extends '::base.html.twig' %}
 
-{% block body -%}
-    <h1>Project edit</h1>
+{% block main -%}
+    <h1>Edycja projektu</h1>
 
     {{ form(edit_form) }}
 
         <ul class="record_actions">
     <li>
         <a href="{{ path('project') }}">
-            Back to the list
+            Powrót do listy projektów
         </a>
     </li>
     <li>{{ form(delete_form) }}</li>

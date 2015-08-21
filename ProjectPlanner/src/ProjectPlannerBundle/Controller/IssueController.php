@@ -45,14 +45,14 @@ class IssueController extends Controller
     public function createAction(Request $request)
     {
         // pobierz projekt po id z ULRa
-        $project_id = $request->request->get('');
         $em = $this->getDoctrine()->getManager();
-        $project = $em->getRepository('ProjectPlannerBundle:Project')->find($project_id);
         $entity = new Issue();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            $project = $form->get('project')->getData();
+
             $entity->setProject($project);
             $em->persist($entity);
             $em->flush();
@@ -220,13 +220,14 @@ class IssueController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
+        $tempProjectId = 0;
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('ProjectPlannerBundle:Issue')->find($id);
-
+            $tempProjectId = $entity->getProject()->getId();
             if (!$entity) {
                 throw $this->createNotFoundException('Unable to find Issue entity.');
             }
@@ -235,7 +236,7 @@ class IssueController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('issue'));
+        return $this->redirect($this->generateUrl('project_show', array('id' => $tempProjectId )));
     }
 
     /**

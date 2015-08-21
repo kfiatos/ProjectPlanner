@@ -17,22 +17,29 @@
                 <td>{{ entity.description }}</td>
             </tr>
             <tr>
-                <th>Membersid</th>
-                <td>{{ entity.membersId }}</td>
+                <th>Members</th>
+                <td>{{ entity.countAssignedUsers }}</td>
             </tr>
             <tr>
                 <th>Deadline</th>
-                <td>{{ entity.deadline|date('Y-m-d H:i:s') }}</td>
+                <td>{{ entity.deadline|date('Y-m-d') }}</td>
             </tr>
             <tr>
                 <th>Commentsid</th>
                 <td>{{ entity.commentsId }}</td>
             </tr>
             <tr>
-                <th>Issues</th>
-                <td>
-                    A lot of issues <a href="{{ path('issue_new', { 'project_id': entity.id }) }}">Dodaj issue</a>
-
+                <th>Zadania:</th>
+                <td><a href="{{ path('issue_new', { 'project_id': entity.id }) }}">Dodaj nowe zadanie</a>
+                   {% if entity.issues.count  %}
+                       {% for issue in entity.issues %}
+                           <tr><td><a href="{{ path('issue_show', { 'id': issue.id }) }}">{{ issue.name }}</a></td></tr>
+                       {% endfor %}
+                   {% else %}
+                       <div class="alert alert-warning">
+                           Brak zadań rozpoczętych w tym projekcie
+                       </div>
+                   {% endif %}
                 </td>
             </tr>
         </tbody>
@@ -42,7 +49,7 @@
             {% for assigned_user in assigned_users %}
                 <ul>
                     <li class="h4">{{ assigned_user.username }}
-                        <a class ="h6" href="{{ path('project_delete_user', {'user_id': assigned_user.id, 'project_id': entity.id }) }}">Usuń użytkownika z projektu</a>
+                        <a class ="btn btn-primary" role="button" href="{{ path('project_delete_user', {'user_id': assigned_user.id, 'project_id': entity.id }) }}">Usuń użytkownika z projektu</a>
                     </li>
                 </ul>
             {% endfor %}
@@ -57,9 +64,11 @@
             <ul>
                 {% if not entity.isUserAssigned(user) %}
                     <li>
-                        {{ user.username }}
-                        <a href="{{ path('project_assign_user', {'user_id': user.id, 'project_id': entity.id }) }}">Dodaj do projektu</a>
+                        <div class="btn btn-pirmary">{{ user.username }}
+                        <a  href="{{ path('project_assign_user', {'user_id': user.id, 'project_id': entity.id }) }}">Dodaj do projektu</a>
+                        </div>
                     </li>
+
                 {% endif %}
             </ul>
         {% endfor %}
@@ -68,7 +77,7 @@
         <ul class="record_actions">
     <li>
         <a href="{{ path('project') }}">
-            Back to the list
+            Powrót do listy projektów
         </a>
     </li>
     <li>

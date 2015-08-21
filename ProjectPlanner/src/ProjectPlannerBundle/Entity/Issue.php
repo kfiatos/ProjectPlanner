@@ -13,8 +13,16 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Issue
 {
-
     /**
+     * @ORM\OneToMany(targetEntity="ProjectPlannerBundle\Entity\Comment", mappedBy="issue")
+     **/
+    private $comments;
+
+    public function __construct(){
+        $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+     /**
      * @ORM\ManyToOne(targetEntity="Project", inversedBy="issues")
      * @ORM\JoinColumn(name="project_id", referencedColumnName="id")
      **/
@@ -30,18 +38,11 @@ class Issue
     private $id;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="project_id", type="integer")
-     */
-    private $projectId;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
      */
-    private $issueName;
+    private $name;
 
     /**
      * @var string
@@ -99,7 +100,7 @@ class Issue
      * @return string
      */
     public function getName(){
-        return $this->issueName;
+        return $this->name;
     }
 
     /**
@@ -199,6 +200,20 @@ class Issue
 
     public function getProject(){
         return $this->project;
+    }
+
+    public function getComments(){
+        return $this->comments;
+    }
+
+    public function addComments(Comment $comment){
+        $this->comments[] = $comments;
+        return $this;
+    }
+
+    public function removeComments(Comment $comment){
+        $this->issues->removeElement($issue);
+
     }
 
 

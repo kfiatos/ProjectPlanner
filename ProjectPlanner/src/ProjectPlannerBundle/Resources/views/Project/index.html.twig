@@ -10,7 +10,7 @@
                 <th>Title</th>
                 <th>Description</th>
                 <th>Memebers</th>
-                <th>Deadline</th>
+                <th>Days to deadline</th>
                 <th>Comments</th>
                 <th>Issues</th>
                 <th>Actions</th>
@@ -22,10 +22,10 @@
                 <td>{{ entity.id }}</a></td>
                 <td><a href="{{ path('project_show', { 'id': entity.id }) }}" title="Szczegóły">{{ entity.title }}</td>
                 <td>{{ entity.description }}</td>
-                <td>{{ entity.membersId }}</td>
-                <td>{% if entity.deadline %}{{ entity.deadline|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ entity.countAssignedUsers() }}</td>
+                <td>{% if entity.deadline %}{{ entity.daysToDeadline }}{% endif %}</td>
                 <td>{{ entity.commentsId }}</td>
-                <td>{{ entity.bugId }}</td>
+                <td>{{ entity.issues.count() }}</td>
                 <td>
                 <ul>
                     <li>
@@ -40,7 +40,7 @@
 
         <ul>
         <li>
-            <a href="{{ path('project_new') }}">
+            <a class="btn btn-primary" href="{{ path('project_new') }}">
                 Dodaj nowy Projekt
             </a>
         </li>
