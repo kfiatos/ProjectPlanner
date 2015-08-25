@@ -7,21 +7,21 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use ProjectPlannerBundle\Entity\Issue;
-use ProjectPlannerBundle\Form\IssueType;
+use ProjectPlannerBundle\Entity\Comment;
+use ProjectPlannerBundle\Form\CommentType;
 
 /**
- * Issue controller.
+ * Comment controller.
  *
- * @Route("/issue")
+ * @Route("/comment")
  */
-class IssueController extends Controller
+class CommentController extends Controller
 {
 
     /**
-     * Lists all Issue entities.
+     * Lists all Comment entities.
      *
-     * @Route("/", name="issue")
+     * @Route("/", name="comment")
      * @Method("GET")
      * @Template()
      */
@@ -29,35 +29,36 @@ class IssueController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $issues = $em->getRepository('ProjectPlannerBundle:Issue')->findAll();
+        $entities = $em->getRepository('ProjectPlannerBundle:Comment')->findAll();
 
         return array(
-            'issues' => $issues,
+            'entities' => $entities,
         );
     }
     /**
-     * Creates a new Issue entity.
+     * Creates a new Comment entity.
      *
-     * @Route("/", name="issue_create")
+     * @Route("/", name="comment_create")
      * @Method("POST")
-     * @Template("ProjectPlannerBundle:Issue:new.html.twig")
+     * @Template("ProjectPlannerBundle:Comment:new.html.twig")
      */
     public function createAction(Request $request)
     {
-        // pobierz projekt po id z ULRa
         $em = $this->getDoctrine()->getManager();
-        $entity = new Issue();
+        $entity = new Comment();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $project = $form->get('project')->getData();
-
-            $entity->setProject($project);
+            $entity->setUser($this->getUser());
+            $issue = $form->get('issue')->getData();
+//            var_dump($issue);
+//            $issue = $em->getRepository('ProjectPlannerBundle:Issue')->find($issue_id);
+            $entity->setIssue($issue);
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('issue_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('comment_show', array('id' => $entity->getId())));
         }
 
         return array(
@@ -67,16 +68,16 @@ class IssueController extends Controller
     }
 
     /**
-     * Creates a form to create a Issue entity.
+     * Creates a form to create a Comment entity.
      *
-     * @param Issue $entity The entity
+     * @param Comment $entity The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(Issue $entity)
+    private function createCreateForm(Comment $entity)
     {
-        $form = $this->createForm(new IssueType(), $entity, array(
-            'action' => $this->generateUrl('issue_create'),
+        $form = $this->createForm(new CommentType(), $entity, array(
+            'action' => $this->generateUrl('comment_create'),
             'method' => 'POST',
         ));
 
@@ -86,32 +87,34 @@ class IssueController extends Controller
     }
 
     /**
-     * Displays a form to create a new Issue entity.
+     * Displays a form to create a new Comment entity.
      *
-     * @Route("/new/{project_id}", name="issue_new")
+     * @Route("/new/{issue_id}/", name="comment_new")
      * @Method("GET")
      * @Template()
      */
-    public function newAction(Request $request, $project_id)
+    public function newAction(Request $request, $issue_id)
     {
-        $entity = new Issue();
+        $entity = new Comment();
         $form   = $this->createCreateForm($entity);
 
         $em = $this->getDoctrine()->getManager();
-        $project = $em->getRepository('ProjectPlannerBundle:Project')->find($project_id);
 
-        $form->get('project')->setData($project);
+        $issue = $em->getRepository('ProjectPlannerBundle:Issue')->find($issue_id);
+
+        $form->get('issue')->setData($issue);
+
         return array(
             'entity' => $entity,
-            'project_id' => $project_id,
+            'issue_id' => $issue_id,
             'form'   => $form->createView(),
         );
     }
 
     /**
-     * Finds and displays a Issue entity.
+     * Finds and displays a Comment entity.
      *
-     * @Route("/{id}", name="issue_show")
+     * @Route("/{id}", name="comment_show")
      * @Method("GET")
      * @Template()
      */
@@ -119,10 +122,10 @@ class IssueController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('ProjectPlannerBundle:Issue')->find($id);
+        $entity = $em->getRepository('ProjectPlannerBundle:Comment')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Issue entity.');
+            throw $this->createNotFoundException('Unable to find Comment entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -134,9 +137,9 @@ class IssueController extends Controller
     }
 
     /**
-     * Displays a form to edit an existing Issue entity.
+     * Displays a form to edit an existing Comment entity.
      *
-     * @Route("/{id}/edit", name="issue_edit")
+     * @Route("/{id}/edit", name="comment_edit")
      * @Method("GET")
      * @Template()
      */
@@ -144,10 +147,10 @@ class IssueController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('ProjectPlannerBundle:Issue')->find($id);
+        $entity = $em->getRepository('ProjectPlannerBundle:Comment')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Issue entity.');
+            throw $this->createNotFoundException('Unable to find Comment entity.');
         }
 
         $editForm = $this->createEditForm($entity);
@@ -161,16 +164,16 @@ class IssueController extends Controller
     }
 
     /**
-    * Creates a form to edit a Issue entity.
+    * Creates a form to edit a Comment entity.
     *
-    * @param Issue $entity The entity
+    * @param Comment $entity The entity
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(Issue $entity)
+    private function createEditForm(Comment $entity)
     {
-        $form = $this->createForm(new IssueType(), $entity, array(
-            'action' => $this->generateUrl('issue_update', array('id' => $entity->getId())),
+        $form = $this->createForm(new CommentType(), $entity, array(
+            'action' => $this->generateUrl('comment_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -179,20 +182,20 @@ class IssueController extends Controller
         return $form;
     }
     /**
-     * Edits an existing Issue entity.
+     * Edits an existing Comment entity.
      *
-     * @Route("/{id}", name="issue_update")
+     * @Route("/{id}", name="comment_update")
      * @Method("PUT")
-     * @Template("ProjectPlannerBundle:Issue:edit.html.twig")
+     * @Template("ProjectPlannerBundle:Comment:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('ProjectPlannerBundle:Issue')->find($id);
+        $entity = $em->getRepository('ProjectPlannerBundle:Comment')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Issue entity.');
+            throw $this->createNotFoundException('Unable to find Comment entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -202,7 +205,7 @@ class IssueController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('issue_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('comment_edit', array('id' => $id)));
         }
 
         return array(
@@ -212,34 +215,33 @@ class IssueController extends Controller
         );
     }
     /**
-     * Deletes a Issue entity.
+     * Deletes a Comment entity.
      *
-     * @Route("/{id}", name="issue_delete")
+     * @Route("/{id}", name="comment_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
     {
-        $tempProjectId = 0;
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('ProjectPlannerBundle:Issue')->find($id);
-            $tempProjectId = $entity->getProject()->getId();
+            $entity = $em->getRepository('ProjectPlannerBundle:Comment')->find($id);
+
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Issue entity.');
+                throw $this->createNotFoundException('Unable to find Comment entity.');
             }
 
             $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('project_show', array('id' => $tempProjectId )));
+        return $this->redirect($this->generateUrl('comment'));
     }
 
     /**
-     * Creates a form to delete a Issue entity by id.
+     * Creates a form to delete a Comment entity by id.
      *
      * @param mixed $id The entity id
      *
@@ -248,13 +250,10 @@ class IssueController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('issue_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('comment_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
     }
-
-
 }
-

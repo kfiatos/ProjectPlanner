@@ -31,9 +31,10 @@ class Comment
     /**
      * @var string
      *
-     * @ORM\Column(name="user_id", type="text")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="comments")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    private $userId;
+    private $user;
 
 
     /**
@@ -49,12 +50,6 @@ class Comment
      */
     private $createdAt;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="project_id", type="integer")
-     */
-    private $projectId;
 
 
     /**
@@ -67,24 +62,24 @@ class Comment
     }
 
     /**
-     * Set userId
+     * Set user
      *
      * @param string $userId
      * @return Comments
      */
-    public function setUserId($userId){
-        $this->userId = $userId;
+    public function setUser($user){
+        $this->user = $user;
 
         return $this;
     }
 
     /**
-     * Get userId
+     * Get user
      *
      * @return string
      */
-    public function getUserId(){
-        return $this->userId;
+    public function getUser(){
+        return $this->user;
     }
 
     /**
@@ -109,26 +104,44 @@ class Comment
     }
 
     /**
-     * Set projectId
+     * Set project
      *
      * @param integer $projectId
      * @return Comments
      */
-    public function setProjectId($projectId){
-        $this->projectId = $projectId;
+    public function setProject($project){
+        $this->project = $project;
 
         return $this;
     }
 
     /**
-     * Get projectId
+     * Get project
      *
      * @return integer
      */
-    public function getProjectId(){
-        return $this->projectId;
+    public function getProject(){
+        return $this->project;
     }
 
+    /**
+     * Set issue
+     *
+     * @return Comments
+     */
+    public function setIssue($issue){
+        $this->issue = $issue;
+
+        return $this;
+    }
+
+    /**
+     * Get issue
+     *
+     */
+    public function getIssue(){
+        return $this->issue;
+    }
 
     /**
      * Set text
@@ -149,4 +162,5 @@ class Comment
     public function getText(){
         return $this->text;
     }
+
 }

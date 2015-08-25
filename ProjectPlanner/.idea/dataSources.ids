@@ -12,7 +12,11 @@
       <column name="user_id" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="false" jdbcType="-1"/>
       <column name="created_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
       <column name="project_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="issue_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="text" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="false" jdbcType="-1"/>
       <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="FK_5F9E962A5E7AA58C" columns="issue_id" ref-table="issues" ref-schema="" ref-catalog="projectPlanner" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="IDX_5F9E962A5E7AA58C" unique="false" columns="issue_id"/>
     </table>
     <table name="fos_users" schema="" catalog="projectPlanner" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -46,7 +50,11 @@
       <column name="started" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
       <column name="resolved_at" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
       <column name="status" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="project_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="FK_DA7D7F83166D1F9C" columns="project_id" ref-table="projects" ref-schema="" ref-catalog="projectPlanner" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="FK_5F9E962A5E7AA58C" table="comments" schema="" catalog="projectPlanner" columns="issue_id"/>
+      <index name="IDX_DA7D7F83166D1F9C" unique="false" columns="project_id"/>
     </table>
     <table name="project_user" schema="" catalog="projectPlanner" type="TABLE">
       <column name="project_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
@@ -67,6 +75,7 @@
       <column name="status" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <column name="comments_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="FK_DA7D7F83166D1F9C" table="issues" schema="" catalog="projectPlanner" columns="project_id"/>
       <exported-key name="FK_B4021E51166D1F9C" table="project_user" schema="" catalog="projectPlanner" columns="project_id"/>
       <exported-key name="FK_27D2987E166D1F9C" table="users_projects" schema="" catalog="projectPlanner" columns="project_id"/>
     </table>

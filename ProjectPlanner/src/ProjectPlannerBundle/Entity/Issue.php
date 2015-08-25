@@ -15,17 +15,17 @@ class Issue
 {
     /**
      * @ORM\OneToMany(targetEntity="ProjectPlannerBundle\Entity\Comment", mappedBy="issue")
-     **/
+     */
     private $comments;
 
     public function __construct(){
         $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-     /**
+    /**
      * @ORM\ManyToOne(targetEntity="Project", inversedBy="issues")
      * @ORM\JoinColumn(name="project_id", referencedColumnName="id")
-     **/
+     */
     private $project;
 
     /**
@@ -202,17 +202,17 @@ class Issue
         return $this->project;
     }
 
-    public function getComments(){
-        return $this->comments;
+    public function getComment(){
+        return $this->comment;
     }
 
-    public function addComments(Comment $comment){
-        $this->comments[] = $comments;
+    public function addComment(Comment $comment){
+        $this->comments[] = $comment;
         return $this;
     }
 
-    public function removeComments(Comment $comment){
-        $this->issues->removeElement($issue);
+    public function removeComment(Comment $comment){
+        $this->issues->removeElement($comment);
 
     }
 

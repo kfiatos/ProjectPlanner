@@ -3,7 +3,7 @@ namespace ProjectPlannerBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
-use ProjectPlannerBundle\ProjectPlannerBundle;
+use ProjectPlannerBundle;
 
 
 /**
@@ -19,10 +19,28 @@ class User extends BaseUser
      */
     private $projects;
 
+
+    /**
+     * @ORM\OneToMany(targetEntity="ProjectPlannerBundle\Entity\Comment", mappedBy="fos_users")
+     */
+    private $comments;
+
+
     public function __construct(){
         parent::__construct();
         $this->projects = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
     }
+
+    public function addComment(\ProjectPlannerBundle\Entity\Comment $comment){
+        $this->comments[] = $comment;
+        return $this;
+    }
+
+    public function removeComment(\ProjectPlannerBundle\Entity\Comment $comment){
+        $this->users->removeElement($comment);
+    }
+
 
     public function addProject(\ProjectPlannerBundle\Entity\Project $project){
         $this->projects[] = $project;
