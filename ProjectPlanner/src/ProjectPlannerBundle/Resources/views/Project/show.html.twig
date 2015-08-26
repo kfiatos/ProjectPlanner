@@ -49,7 +49,7 @@
             {% for assigned_user in assigned_users %}
                 <ul>
                     <li class="h4">{{ assigned_user.username }}
-                        <a class ="btn btn-primary" role="button" href="{{ path('project_delete_user', {'user_id': assigned_user.id, 'project_id': entity.id }) }}">Usuń użytkownika z projektu</a>
+                        <a class ="btn-small btn-primary" role="button" href="{{ path('project_delete_user', {'user_id': assigned_user.id, 'project_id': entity.id }) }}">x</a>
                     </li>
                 </ul>
             {% endfor %}

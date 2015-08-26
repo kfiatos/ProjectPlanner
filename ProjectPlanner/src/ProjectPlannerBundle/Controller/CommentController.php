@@ -46,19 +46,19 @@ class CommentController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $entity = new Comment();
+
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $entity->setUser($this->getUser());
             $issue = $form->get('issue')->getData();
-//            var_dump($issue);
-//            $issue = $em->getRepository('ProjectPlannerBundle:Issue')->find($issue_id);
+
             $entity->setIssue($issue);
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('comment_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('issue_show', array('id' => $entity->getIssue()->getId())));
         }
 
         return array(

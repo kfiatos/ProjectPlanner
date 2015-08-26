@@ -1,41 +1,33 @@
 {% extends '::base.html.twig' %}
 
-{% block body -%}
-    <h1>User</h1>
+{% block main -%}
+    <h1>Użytkownik</h1>
 
     <table class="record_properties">
         <tbody>
             <tr>
                 <th>Id</th>
-                <th>Name</th>
-                <th>Email</th>
-                {#<th>Id</th>#}
-                {#<td>{{ entity.}}</td>#}
-                {#<th>Id</th>#}
-                {#<td>{{ entity.id }}</td>#}
+                <th>Nazwa</th>
+                <th>E-mail</th>
             </tr>
             <tr>
                 <td>{{ entity.id }}</td>
                 <td>{{ entity.username }}</td>
                 <td>{{ entity.email }}</td>
-
-
-
             </tr>
         </tbody>
     </table>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('user') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('user_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+    <ul class="record_actions">
+        <li>
+            <a href="{{ path('user') }}">
+                Lista użytkowników
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('user_edit', { 'id': entity.id }) }}">
+                Edycja
+            </a>
+        </li>
+        <li>{{ form(delete_form) }}</li>
+    </ul>
 {% endblock %}

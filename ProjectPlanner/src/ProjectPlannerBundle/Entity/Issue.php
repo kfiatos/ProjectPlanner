@@ -202,8 +202,8 @@ class Issue
         return $this->project;
     }
 
-    public function getComment(){
-        return $this->comment;
+    public function getComments(){
+        return $this->comments;
     }
 
     public function addComment(Comment $comment){

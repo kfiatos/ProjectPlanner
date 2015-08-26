@@ -1,0 +1,5 @@
+services:
+#  money_converter:
+#    class: CodersLab\WorkshopBundle\Money\MoneyConverter
+#    properties:
+#      client: "@NBPrepository"
