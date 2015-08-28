@@ -4,8 +4,8 @@ parameters:
 #    parameter_name: value
 
 services:
-   security.access.post_voter:
-          class:      ProjectPlannerBundle\Security\Authorization\Voter\PostVoter
+   security.access.project_voter:
+          class:      ProjectPlannerBundle\Security\Authorization\Voter\ProjectVoter
           public:     false
           tags:
              - { name: security.voter }

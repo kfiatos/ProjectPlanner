@@ -49,7 +49,7 @@
             {% for assigned_user in assigned_users %}
                 <ul>
                     <li class="h4">{{ assigned_user.username }}
-                        <a class ="btn-small btn-primary" role="button" href="{{ path('project_delete_user', {'user_id': assigned_user.id, 'project_id': entity.id }) }}">x</a>
+                        <a  href="{{ path('project_delete_user', {'user_id': assigned_user.id, 'project_id': entity.id }) }}" title="Usuń z projektu"><i class="text-danger fa fa-times"></i></a>
                     </li>
                 </ul>
             {% endfor %}
@@ -64,8 +64,8 @@
             <ul>
                 {% if not entity.isUserAssigned(user) %}
                     <li>
-                        <div class="btn btn-pirmary">{{ user.username }}
-                        <a  href="{{ path('project_assign_user', {'user_id': user.id, 'project_id': entity.id }) }}">Dodaj do projektu</a>
+                        <div >{{ user.username }}
+                        <a  href="{{ path('project_assign_user', {'user_id': user.id, 'project_id': entity.id }) }}"><i class="fa fa-plus"></i></a>
                         </div>
                     </li>
 
