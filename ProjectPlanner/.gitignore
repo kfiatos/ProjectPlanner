@@ -9,6 +9,7 @@
 /composer.phar
 /vendor/
 /web/bundles/
+!/web/bundles/projectplanner
 /.idea/*
 /web/.DS_store
 
