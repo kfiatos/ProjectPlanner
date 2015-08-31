@@ -4,6 +4,7 @@ namespace ProjectPlannerBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 
+
 /**
  * ProjectRepository
  *
@@ -12,4 +13,15 @@ use Doctrine\ORM\EntityRepository;
  */
 class ProjectRepository extends EntityRepository
 {
+    public function findByUser(User $user){
+        $projectsForUser = [];
+        $projects = $this->findAll();
+
+        foreach($projects as $project){
+            if($project->isUserAssigned($user)) {
+                $projectsForUser[] = $project;
+            }
+        }
+        return $projectsForUser;
+    }
 }

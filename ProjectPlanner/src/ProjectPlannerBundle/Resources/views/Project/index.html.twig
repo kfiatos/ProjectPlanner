@@ -18,7 +18,7 @@
         </thead>
         <tbody>
         {% for entity in entities %}
-            {%  if entity.userAssigned(app.user) %}
+            {#{%  if entity.userAssigned(app.user) or entity. %}#}
                 <tr>
                     <td>{{ entity.id }}</a></td>
                     <td><a href="{{ path('project_show', { 'id': entity.id }) }}" title="Szczegóły">{{ entity.title }}</td>
@@ -35,7 +35,7 @@
                     </ul>
                     </td>
                 </tr>
-            {% endif %}
+            {#{% endif %}#}
         {% endfor %}
         </tbody>
     </table>

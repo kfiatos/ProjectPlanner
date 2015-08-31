@@ -28,9 +28,14 @@ class ProjectController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('ProjectPlannerBundle:Project')->findAll();
-
+        $userTemp = $this->get('security.token_storage')->getToken()->getUser();
+//        $user = $em->getRepository('')->
+//        $entities = $em->getRepository('ProjectPlannerBundle:Project')->findAll();
+        if($userTemp->hasRole('ROLE_SUPER_ADMIN')) {
+            $entities = $em->getRepository('ProjectPlannerBundle:Project')->findAll();
+        }else{
+            $entities = $em->getRepository('ProjectPlannerBundle:Project')->findByUser($userTemp);
+        }
 
 
         return array(
@@ -245,7 +250,7 @@ class ProjectController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('project_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->add('submit', 'submit', array('label' => 'Usuń projekt'))
             ->getForm()
         ;
     }
