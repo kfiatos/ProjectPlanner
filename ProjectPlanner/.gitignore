@@ -10,6 +10,6 @@
 /vendor/
 /web/bundles/
 !/web/bundles/projectplanner
-/.idea/*
+/.idea
 /web/.DS_store
 
